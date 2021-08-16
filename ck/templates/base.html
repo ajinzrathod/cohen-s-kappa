@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en"> 
+    {% block head %}
+        {% include 'base/head.html' %}
+    {% endblock %}
+
+    {% block body_start %} <body class="app"> {% endblock %}
+
+        {% block header %}
+            {% include 'base/header.html' %}
+        {% endblock %}
+
+        {% block content_start %} <div class="app-wrapper"> {% endblock %}
+
+            {% block content %}
+                <!-- <div class="app-content pt-3 p-md-3 p-lg-4"> -->
+                <div class="container-xl">
+                    Jai Swaminarayan. This is base content
+                </div><!--//container-fluid-->
+                <!-- </div>&#60;&#33;&#45;&#45;//app-content&#45;&#45;&#62; -->
+            {% endblock %}
+
+            {% block footer %}
+                {% include 'base/footer.html' %}
+            {% endblock %}
+
+            {% block content_end %} </div><!--//app-wrapper--> {% endblock %}
+
+        {% block js %}
+            {% include 'base/js.html' %}
+        {% endblock %}
+
+        {% block body_end %} </body> {% endblock %}
+</html> 

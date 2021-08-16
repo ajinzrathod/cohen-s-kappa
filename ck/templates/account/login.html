@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_start %}
+    <body class="app app-login p-0">    	
+    {% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block content_start %}
+        <div class="row g-0 app-auth-wrapper">
+            <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+                <div class="d-flex flex-column align-content-end">
+                {% endblock %}
+
+                {% block content %}
+                    {% include 'account/login-form.html' %}
+                {% endblock %}
+
+                {% block content_end %}
+                    </div><!--//flex-column-->
+            </div><!--//auth-main-col-->
+
+            {% include 'account/half-screen-bg-image.html' %}
+        </div><!--//row-->
+    {% endblock %}
+
+    {% block body_end %}
+        </body>
+    {% endblock %}

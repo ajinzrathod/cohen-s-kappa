@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tz %}
+
+{% block body_start %}
+    <body class="app">
+    {% endblock %}
+
+    {% block content_start %}
+        <div class="app-wrapper">
+            <div class="app-content pt-3 p-md-3 p-lg-4">
+                <div class="container-xl">
+                {% endblock %}
+
+                {% block content %}
+
+                    Main Content
+
+                {% endblock %}
+
+                {% block content_end %}
+                    </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block body_end %}
+        <!-- Javascript  -->
+    </body>
+{% endblock %}
