@@ -1,26 +1,31 @@
 from django.conf import settings
 
 
+def isAdmin(request):
+    # if user.groups.filter(name__in=['Admin', 'group2']).exists()
+    # OR
+    if request.user.groups.filter(name='Admin').exists():
+        return True
+    if request.user.is_superuser:
+        return True
+    return False
+
+
 def user_data(request):
     if request.user.is_authenticated:
 
-        # notification_count
-        notification_count = 99
-        if notification_count > 9:
-            notification_count = "9+"
-        else:
-            # to string coz it will be compared in str in header.html
-            notification_count = str(notification_count)
+        # Checking if admin
+        # Source: https://stackoverflow.com/a/20110261/11605100
+        admin_or_higher = isAdmin(request)
 
         data = {
             'project_name': settings.PROJECT_NAME,
-            'notification_count': notification_count,
+            'admin_or_higher': admin_or_higher,
         }
 
     # # if user not authenticated
     else:
         data = {
             'project_name': settings.PROJECT_NAME,
-            'notification_count': "0",
         }
     return data

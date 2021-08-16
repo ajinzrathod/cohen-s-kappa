@@ -27,6 +27,12 @@ urlpatterns = [
 
     # main pages
     path('', include('main.urls')),
+
+    # Tweets
+    path('tweets/', include('tweet.urls')),
+
+    # APIs
+    path('api/', include('api.urls')),
 ]
 
 

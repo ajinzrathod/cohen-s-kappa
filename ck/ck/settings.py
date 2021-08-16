@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    # Custom
+    'tweet.apps.TweetConfig',
+
+    # Django Rest Framework
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
