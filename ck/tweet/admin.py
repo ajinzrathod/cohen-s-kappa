@@ -4,6 +4,7 @@ from django.db import models
 from django.forms import Textarea
 from django.utils.translation import ngettext
 from django.contrib import messages
+from django.utils.html import format_html
 
 
 # Register your models here.
@@ -48,13 +49,27 @@ class TweetAdmin(admin.ModelAdmin):
 
 
 class ResponseAdmin(admin.ModelAdmin):
-    list_filter = ['response']
-    search_fields = ['user_id', 'tweet_id', 'response']
-    list_display = ['id', 'user_id', 'tweet_id', 'response']
+    list_filter = ['response', 'priority']
+    search_fields = ['user_id', 'tweet_id', 'response', 'priority']
+    # list_display = ['id', 'user_id', 'tweet_id', 'response', 'priority']
+    list_display = ['id', 'user_id', 'custom_tweet', 'response', 'priority']
 
     # dont forget comma at end if using only 1 item in below tuple
     # raw_id_fields = ("user_id", "tweet_id")
     raw_id_fields = ("tweet_id", )
+
+    @admin.display(description='Tweet (FK)')
+    def custom_tweet(self, obj):
+        # although we have set on_delete=PROTECT, below line does not matter
+        # this is just for safe side (in case we change the database in future)
+        if not obj.tweet_id:
+            return "--Unknown--"
+        else:
+            return format_html(
+                "<a href='../../tweet/tweet/" +
+                str(obj.tweet_id.id) +
+                "'>" + str(obj.tweet_id.tweet) + "</a>"
+            )
 
 
 admin.site.register(Tweet, TweetAdmin)
