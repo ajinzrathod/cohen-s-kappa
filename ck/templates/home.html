@@ -14,7 +14,67 @@
 
                 {% block content %}
 
-                    Main Content
+                    <form class="response-form">
+                        <div class="form-left-decoration"></div>
+                        <div class="form-right-decoration"></div>
+                        <div class="circle"></div>
+                        <div class="form-inner">
+                            <div> <b>Tweet Id:</b> 179</div>
+
+                            <blockquote>
+                                <p class="text-dark">@RailMinIndia  Booked the E-ticket on PNR NUMBER- 6153163290.BUT till now not receiveing the ticket message on my resistor phone number.</p>
+                            </blockquote>
+
+                            <hr>
+                            {# If negative, also set severe to zero #}
+                            <div class="positive_or_negative">
+                                <div><b>How is this Tweet ?</b></div>
+                                <input type="radio" value="1" id="positive-tweet" name="pos_or_neg" />
+                                <label for="positive-tweet" class="radio">Positive</label>
+                                &nbsp;&nbsp;
+                                <input type="radio" value="-1" id="negative-tweet" name="pos_or_neg" />
+                                <label for="negative-tweet" class="radio">Negative</label>
+                            </div>
+                            <div id="pos_or_neg_status">
+                                Status
+                            </div>
+
+                            <hr>
+                            <div class="severe-type" id="severe-type">
+                                <div><b>How severe the tweet is ?</b></div>
+                                <div>
+                                    <input type="radio" value="none" id="radioOne" name="severe" disabled/>
+                                    <label for="radioOne" class="radio">Low</label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="none" id="radioTwo" name="severe" checked/>
+                                    <label for="radioTwo" class="radio">Moderate</label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="none" id="radioThree" name="severe" />
+                                    <label for="radioThree" class="radio">High</label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="none" id="radioFour" name="severe" />
+                                    <label for="radioFour" class="radio">Extreme</label>
+                                </div>
+                            </div>
+                            <div id="severe_status">
+                                Status
+                            </div>
+
+                            <br>
+                            <div class="text-muted">Tweets marked with asterik are mandatory</div>
+                            <div style="float: left;">
+                                <button type="button" class="btn btn-secondary">Next</button>
+                                <button type="button" class="btn">Skip for now</button>
+                            </div>
+                            <div style="float: right;">
+                                <button type="button" class="btn app-btn-danger">Never ask Again</button>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </form>
 
                 {% endblock %}
 
@@ -24,7 +84,11 @@
         </div>
     {% endblock %}
 
+    {% block js %}
+        {% include 'base/js.html' %}
+        <script src="{% static 'js/tweet-response.js' %}"></script>
+    {% endblock %}
+
     {% block body_end %}
-        <!-- Javascript  -->
     </body>
 {% endblock %}

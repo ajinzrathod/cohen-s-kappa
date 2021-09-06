@@ -167,3 +167,117 @@
     width: 25px;
     height: 25px;
 }
+
+/* Home page css */
+.response-form{
+    position: relative;
+    width: 100%;
+    border-radius: 30px;
+    background: #fff;
+}
+
+.form-left-decoration,
+.form-right-decoration {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    border-radius: 20px;
+    background: #f5f6fe;
+}
+
+.form-left-decoration {
+    bottom: 60px;
+    left: -30px;
+}
+.form-right-decoration {
+    top: 60px;
+    right: -30px;
+}
+
+.form-left-decoration:before,
+.form-left-decoration:after,
+.form-right-decoration:before,
+.form-right-decoration:after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    border-radius: 30px;
+    background: #fff;
+}
+.form-left-decoration:before {
+    top: -20px;
+}
+.form-left-decoration:after {
+    top: 20px;
+    left: 10px;
+}
+.form-right-decoration:before {
+    top: -20px;
+    right: 0;
+}
+.form-right-decoration:after {
+    top: 20px;
+    right: 10px;
+}
+.circle {
+    position: absolute;
+    bottom: 80px;
+    left: -55px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+}
+.form-inner {
+    padding: 40px;
+}
+
+input[type=radio] {
+    display: none;
+}
+label.radio {
+    position: relative;
+    display: inline-block;
+    text-indent: 30px;
+    cursor: pointer;
+}
+label.radio:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 0.5px solid #8ebf42;
+    background: #fff;
+}
+label.radio:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    top: 5px;
+    left: 4px;
+    border-bottom: 3px solid #8ebf42;
+    border-left: 3px solid #8ebf42;
+    transform: rotate(-45deg);
+    opacity: 0;
+}
+input[type=radio]:checked + label:after {
+    opacity: 1;
+}
+.positive-or-negative div, .severe-type div {
+    display: flex;
+    margin: 6px 0;
+}
+
+blockquote {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    padding-left: 15px !important;
+    border-left: 5px solid #15a362 !important;
+    display:inline-flex !important; /* Slight bigger line */
+}
+/* Home page ends */
