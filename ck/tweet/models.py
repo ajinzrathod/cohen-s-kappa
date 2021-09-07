@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -58,3 +60,21 @@ class Response(models.Model):
     class Meta:
         verbose_name = _('Response')
         verbose_name_plural = _('Responses')
+
+
+@receiver(pre_save, sender=Response)
+def response_pre_save(sender, instance, *args, **kwargs):
+    """
+    If you dont include the sender argument in the decorator, like
+    @receiver(pre_save, sender=MyModel), the callback will be called for all
+    models.
+    """
+    if instance.response != POSITIVE:
+        instance.priority = NO_PRIORITY
+
+    """
+    in post save, .save() "might" be called. I am not sure, read this warning:
+    https://docs.djangoproject.com/en/3.2/ref/signals/#module-django.db.models.signals
+
+    or save() should be called only if save() method is overriden. Not sure
+    """

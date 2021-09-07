@@ -1,5 +1,8 @@
 # from django.shortcuts import render
-from tweet.models import Tweet, Response as ResponseModel, VALID_RESPONSES
+from tweet.models import (
+    Tweet, Response as ResponseModel,
+    VALID_RESPONSES, POSITIVE,
+    NO_PRIORITY)
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.models import User
 
