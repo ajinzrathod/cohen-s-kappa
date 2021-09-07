@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from tweet.models import Tweet, Response as ResponseModel
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 # Rest Framework
 from .serializers import TweetSerializer, ResponseSerializer
@@ -12,7 +12,7 @@ from rest_framework.response import Response
 # https://www.youtube.com/watch?v=TmsD8QExZ84&t=1104s
 # Create your views here.
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getAllTweets(request):
     """
     Source:
@@ -45,7 +45,7 @@ def getAllTweets(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getTweet(request, id):
     # 403 Forbidden
 
@@ -61,7 +61,7 @@ def getTweet(request, id):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def markResponse(request, tweet_id, tweet_response):
     # converting tweet_response from str to int to accept negative values also
     try:

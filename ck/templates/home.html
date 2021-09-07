@@ -86,9 +86,16 @@
 
     {% block js %}
         {% include 'base/js.html' %}
+
+        {# tweet-response is js file. So using {{ csrf_token }} in js file will not work. It must be a html file. Thus putting the csrf_token in a global variable that we can then access from our script.  #}
+        <script>
+            // https://stackoverflow.com/a/23350040/11605100
+            var csrftoken = '{{ csrf_token }}';
+        </script>
         <script src="{% static 'js/tweet-response.js' %}"></script>
+
     {% endblock %}
 
     {% block body_end %}
-    </body>
-{% endblock %}
+        </body>
+    {% endblock %}

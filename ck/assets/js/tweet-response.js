@@ -18,12 +18,14 @@ function pos_or_neg_click(){
 
     // Clicked on negative
     if (pos_or_neg == "-1"){
+        document.getElementById("pos_or_neg_status").innerHTML = "Saving...";
         // This will disable all the children of the div
         var nodes = document.getElementById("severe-type").getElementsByTagName('*');
         for(var i = 0; i < nodes.length; i++){
             nodes[i].disabled = true;
             nodes[i].style.color = "#ddd";
         }
+        document.getElementById("pos_or_neg_status").innerHTML = "Saved";
     }
 
     // Clicked on positive
@@ -35,7 +37,30 @@ function pos_or_neg_click(){
             node.disabled = false;
             node.style.color = '';
         }
-        document.getElementById("pos_or_neg_status").innerHTML = "Saved"
+
+        var xhr = new XMLHttpRequest()
+        var url = "/api/mark-response/191/1/"
+        // Send data using post
+        xhr.open("POST", url, true)
+        xhr.setRequestHeader("Content-Type", "application/json")
+        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        xhr.onreadystatechange = function () {
+            console.log(xhr.readyState)
+            console.log(xhr.responseText)
+            if (xhr.responseText == null || xhr.responseText == ""){ }
+            else{
+                var xhrResponseJson = JSON.parse(xhr.responseText)
+                var xhrResponseText = JSON.stringify(xhrResponseJson, null, 4)
+                document.getElementById("pos_or_neg_status").innerHTML = xhrResponseText
+            }
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("pos_or_neg_status").innerHTML = "Saved"
+                }
+        };
+        var data = JSON.stringify({});
+
+        // Send data using post
+        xhr.send(data);
     }
 }
 /* Pos neg Click Ends*/

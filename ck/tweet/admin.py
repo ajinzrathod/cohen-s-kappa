@@ -68,7 +68,8 @@ class ResponseAdmin(admin.ModelAdmin):
             return format_html(
                 "<a href='../../tweet/tweet/" +
                 str(obj.tweet_id.id) +
-                "'>" + str(obj.tweet_id.tweet) + "</a>"
+                "/'>" + str(obj.tweet_id.id) + " </a> - " +
+                str(obj.tweet_id.tweet)
             )
 
 
