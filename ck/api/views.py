@@ -2,9 +2,10 @@
 from tweet.models import (
     Tweet, Response as ResponseModel,
     VALID_RESPONSES, POSITIVE,
-    NO_PRIORITY)
+    VALID_PRIORITIES, NO_PRIORITY)
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.models import User
+from django.db.models import F
 
 # Rest Framework
 from .serializers import TweetSerializer, ResponseSerializer
@@ -50,15 +51,11 @@ def getAllTweets(request):
 
 @api_view(['GET', 'POST'])
 def getTweet(request, id):
-    # 403 Forbidden
-
-    # The HTTP 403 Forbidden client error status response code indicates that
-    # the server understood the request but refuses to authorize it.
     try:
         tweet = Tweet.objects.get(id=id)
     except ObjectDoesNotExist:
         content = {}
-        return Response(content, status=403)
+        return Response(content, status=400)
 
     serializer = TweetSerializer(tweet, many=False)
     return Response(serializer.data)
@@ -130,4 +127,88 @@ def markResponse(request, tweet_id, tweet_response):
         return Response(content, status=400)
 
     serializer = ResponseSerializer(result, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def markPriority(request, tweet_id, priority):
+    # checking if user has logged in
+    if not request.user.is_authenticated:
+        content = {
+            'description': 'Authentication Failed',
+            'message': 'Failed'
+        }
+        return Response(content, status=403)
+
+    # Checking if Tweet Exists
+    try:
+        Tweet.objects.get(id=tweet_id)
+    except ObjectDoesNotExist:
+        content = {
+            'description': 'No such Tweet Exists',
+            'message': 'Failed'
+        }
+        return Response(content, status=403)
+
+    if priority not in VALID_PRIORITIES:
+        content = {
+            'description': 'Not a VALID PRIORITY',
+            'message': 'Failed'
+        }
+        return Response(content, status=400)
+
+    # priority will only be changed if response is postive,
+    # coz pre_save method is used
+    try:
+        # Saving Data
+        obj, created = ResponseModel.objects.update_or_create(
+            user_id=request.user,
+            tweet_id=Tweet.objects.get(pk=tweet_id),
+            defaults={
+                'priority': priority,
+            },
+        )
+    except Exception as e:
+        print(e)
+        content = {
+            'description': 'Error occured while saving data',
+            'message': 'Failed'
+        }
+        return Response(content, status=403)
+
+    # Getting saved data
+    try:
+        result = ResponseModel.objects.get(
+            user_id=request.user,
+            tweet_id=tweet_id,
+        )
+    except ObjectDoesNotExist:
+        content = {}
+        return Response(content, status=400)
+
+    serializer = ResponseSerializer(result, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def getNextTweet(request):
+    # checking if user has logged in
+    if not request.user.is_authenticated:
+        content = {
+            'description': 'Authentication Failed',
+            'message': 'Failed'
+        }
+        return Response(content, status=403)
+
+    try:
+        q1 = ResponseModel.objects.filter(user_id=request.user.id)
+        q2 = Tweet.objects.exclude(
+            id__in=q1.values_list('tweet_id', flat=True))
+        q3 = q2.order_by('-common_for_all', 'id')[:1]
+
+    except ObjectDoesNotExist:
+        content = {}
+        return Response(content, status=400)
+
+    serializer = TweetSerializer(q3, many=True)
     return Response(serializer.data)

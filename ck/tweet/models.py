@@ -41,6 +41,7 @@ LOW = 1
 MODERATE = 2
 HIGH = 3
 EXTREME = 4
+VALID_PRIORITIES = (NO_PRIORITY, LOW, MODERATE, HIGH, EXTREME)
 
 PRIORITES = (
     (NO_PRIORITY, 'No Priority'),
@@ -55,7 +56,10 @@ class Response(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet_id = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     response = models.SmallIntegerField(choices=RESPONSES)
-    priority = models.SmallIntegerField(choices=PRIORITES, default=NO_PRIORITY)
+    priority = models.SmallIntegerField(
+        choices=PRIORITES, default=NO_PRIORITY,
+        help_text=_('Priority will auto set to \"No Priority\"'
+                    ' if Response is not postive.'))
 
     class Meta:
         verbose_name = _('Response')

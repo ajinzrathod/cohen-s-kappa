@@ -53,6 +53,9 @@ INSTALLED_APPS = [
 
     # Django Rest Framework
     'rest_framework',
+
+    # Django Debug Toolbar,
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +66,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom
+    # Django debug_toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ck.urls'
@@ -190,3 +197,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

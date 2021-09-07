@@ -131,7 +131,8 @@
 
 /* Buttons */
 .app-btn-danger{
-    background-color: #d26d69 !important;
+    /* background-color: #d26d69 !important; */
+    background-color: #ba2121 !important;
     color: white !important;
 }
 .app-btn-danger:hover{
