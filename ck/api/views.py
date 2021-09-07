@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from tweet.models import Tweet, Response as ResponseModel
+from tweet.models import Tweet, Response as ResponseModel, VALID_RESPONSES
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.models import User
 
@@ -85,13 +85,19 @@ def markResponse(request, tweet_id, tweet_response):
     # Checking if Tweet Exists
     try:
         Tweet.objects.get(id=tweet_id)
-        print("Tweet Exists")
     except ObjectDoesNotExist:
         content = {
             'description': 'No such Tweet Exists',
             'message': 'Failed'
         }
         return Response(content, status=403)
+
+    if tweet_response not in VALID_RESPONSES:
+        content = {
+            'description': 'Not a VALID REPONSE',
+            'message': 'Failed'
+        }
+        return Response(content, status=400)
 
     # Saving Data
     try:
