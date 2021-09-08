@@ -33,6 +33,9 @@ urlpatterns = [
     # Tweets
     path('tweets/', include('tweet.urls')),
 
+    # Compare
+    path('compare/', include('compare.urls')),
+
     # APIs
     path('api/', include('api.urls')),
 

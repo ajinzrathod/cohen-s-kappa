@@ -1,11 +1,11 @@
 # from django.shortcuts import render
 from tweet.models import (
     Tweet, Response as ResponseModel,
-    VALID_RESPONSES, POSITIVE,
-    VALID_PRIORITIES, NO_PRIORITY)
+    VALID_RESPONSES,
+    VALID_PRIORITIES)
 from django.core.exceptions import ObjectDoesNotExist
-# from django.contrib.auth.models import User
-from django.db.models import F
+from django.contrib.auth.models import User
+# from django.db.models import F
 
 # Rest Framework
 from .serializers import TweetSerializer, ResponseSerializer
@@ -220,3 +220,58 @@ def getNextTweet(request):
 
     serializer = TweetSerializer(q3, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def calculateKappa(request, user1, user2):
+    # check if user has view acces to tweet_response
+    if not request.user.has_perm('tweet.view_response'):
+        print("User does NOT have view permission to tweet_response")
+        content = {
+            'description': 'You do not have permission to view tweet_response',
+            'message': 'failed',
+        }
+        return Response(content, status=400)
+
+    # check if both user exists
+    try:
+        User.objects.get(id=user1)
+        User.objects.get(id=user2)
+    except ObjectDoesNotExist:
+        content = {
+            'description': 'Make sure both user id is correct and both the user exists',
+            'message': 'failed',
+        }
+        return Response(content, status=403)
+
+    import pandas as pd
+    from django.db import connection
+    from sklearn.metrics import cohen_kappa_score
+
+    query = str(ResponseModel.objects.all().query)
+    df = pd.read_sql_query(query, connection)
+
+    del df['id']
+    del df['priority']
+
+    df = df.drop(df[(df.response == 0) | (df.response == -2)].index)
+    df.loc[df['user_id_id'].isin([user1, user2])]
+
+    df1 = df[df["user_id_id"] == user1]
+    df2 = df[df["user_id_id"] == user2]
+
+    combined_df = pd.merge(df1, df2, on="tweet_id_id")
+    print(combined_df.head())
+
+    tagger1 = combined_df['response_x']
+    tagger2 = combined_df['response_y']
+
+    cohen_kappa_score = cohen_kappa_score(tagger1, tagger2)
+    print(cohen_kappa_score)
+
+    content = {
+        'cohen_kappa_score': cohen_kappa_score,
+        'description': 'success',
+        'message': 'success',
+    }
+    return Response(content, status=200)
