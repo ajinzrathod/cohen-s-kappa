@@ -59,7 +59,10 @@ class Response(models.Model):
     priority = models.SmallIntegerField(
         choices=PRIORITES, default=NO_PRIORITY,
         help_text=_('Priority will auto set to \"No Priority\"'
-                    ' if Response is not postive.'))
+                    ' if Response is NOT postive.<br/>'
+                    'Priority will auto set to \"Moderate\"'
+                    ' if Response is postive and Priority is \"No Priority\".')
+    )
 
     class Meta:
         verbose_name = _('Response')
@@ -75,6 +78,9 @@ def response_pre_save(sender, instance, *args, **kwargs):
     """
     if instance.response != POSITIVE:
         instance.priority = NO_PRIORITY
+
+    if instance.response == POSITIVE and instance.priority == NO_PRIORITY:
+        instance.priority = MODERATE
 
     """
     in post save, .save() "might" be called. I am not sure, read this warning:

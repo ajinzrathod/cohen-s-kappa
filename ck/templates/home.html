@@ -26,7 +26,7 @@
                             </blockquote>
 
                             <hr>
-                            <div class="positive_or_negative">
+                            <div class="positive_or_negative" id="pos_or_neg_div">
                                 <div><b>How is this Tweet ?</b></div>
                                 <input type="radio" value="1" id="positive-tweet" name="pos_or_neg" />
                                 <label for="positive-tweet" class="radio">Positive</label>
@@ -63,9 +63,9 @@
                             </div>
 
                             <br>
-                            <div class="text-muted">Tweets marked with asterik are mandatory</div>
+                            <!-- <div class="text-muted">Tweets marked with asterik are mandatory</div> -->
                             <div style="float: left;">
-                                <button type="button" class="btn btn-secondary">Next</button>
+                                <button type="button" class="btn btn-secondary" id="next_tweet_btn">Next</button>
                                 <button type="button" class="btn" id="skip_tweet">Skip for now</button>
                                 <span id="skip_tweet_status"></span>
                             </div>

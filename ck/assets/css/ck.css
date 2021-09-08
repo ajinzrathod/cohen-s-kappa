@@ -140,6 +140,15 @@
     color: white !important;
 }
 
+/* .app-btn-danger:disabled, .app-btn-danger.disabled{ */
+/*     color: #fff !important; */
+/*     background-color: #dc3545 !important; */
+/*     border-color: #dc3545 !important; */
+/* } */
+
+#skip_tweet:disabled{
+    color: #6c757d !important;
+}
 .app-btn-warning{
     background-color: #eebf41 !important;
     /* color: white !important; */

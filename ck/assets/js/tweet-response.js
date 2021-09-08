@@ -14,6 +14,7 @@ for(var i = 0; i < nodes.length; i++){
 }
 
 function pos_or_neg_click(){
+    document.getElementById("next_tweet_btn").disabled = true
     var pos_or_neg = document.querySelector('input[name="pos_or_neg"]:checked').value
     var xhr = new XMLHttpRequest()
 
@@ -33,18 +34,17 @@ function pos_or_neg_click(){
         // if status: 200
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("pos_or_neg_status").innerHTML = "Saved"
+            document.getElementById("next_tweet_btn").disabled = false
         }
     };
 
     // Clicked on negative
     if (pos_or_neg == "-1"){
         document.getElementById("pos_or_neg_status").innerHTML = "Saving...";
-        // This will disable all the children of the div
-        var nodes = document.getElementById("severe-type").getElementsByTagName('*');
-        for(var i = 0; i < nodes.length; i++){
-            nodes[i].disabled = true;
-            nodes[i].style.color = "#ddd";
-        }
+
+        // Disabling severe tweet choices
+        disableSevereTweetElements()
+
         var url = "/api/mark-response/" + curr_tweet_id + "/-1/"
         xhr.open("POST", url, true)
 
@@ -94,6 +94,7 @@ radioThree.addEventListener('click', severeClick)
 radioFour.addEventListener('click', severeClick)
 
 function severeClick(){
+    document.getElementById("next_tweet_btn").disabled = true
     document.getElementById("severe_status").innerHTML = "Saving...";
     var severe = document.querySelector('input[name="severe"]:checked').value
     console.log(severe)
@@ -116,6 +117,7 @@ function severeClick(){
         // if status: 200
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("severe_status").innerHTML = "Saved"
+            document.getElementById("next_tweet_btn").disabled = false
         }
     };
 
@@ -212,11 +214,6 @@ function never_ask_again_click(){
 function getNextTweet(){
     // show no more tweets when none
     //
-    // unselect all radio buttons when 
-    // next is clicked,
-    // skip is clicked,
-    // neevr ask again is clicked
-    //
     // next pr click kare toh see if both answers are yet answered or not
     // else it should not be enabled
     document.getElementById("tweet_id").innerHTML = "Getting Tweet id"
@@ -239,10 +236,34 @@ function getNextTweet(){
 
         // if status: 200
         if (xhr.readyState === 4 && xhr.status === 200) {
+            old_tweet = curr_tweet_id;
             curr_tweet_id = xhrResponseJson[0]['id']
             curr_tweet_text = xhrResponseJson[0]['tweet']
+
+            if(old_tweet == curr_tweet_id){
+                document.getElementById("pos_or_neg_status").innerHTML = "<span style='color: #ff0000 !important;'>This field cannot be empty</span>"
+            }
+
             document.getElementById("tweet_id").innerHTML = curr_tweet_id
             document.getElementById("next_tweet").innerHTML = curr_tweet_text
+
+            if(curr_tweet_id == 0){
+                disablePositiveNegativeElements()
+                disableButtons()
+                console.log("Disabled pos and neg. Disabled Buttons")
+            }
+            else{
+                // what if admin inserted new tweets just after all tweets are completed of user x
+                // thus enable it again
+                enablePositiveNegativeElements()
+                enableButtons()
+                document.getElementById("next_tweet_btn").disabled = true
+                console.log("Enabled pos and neg. Enabled Buttons")
+            }
+            setSevereToModerate()
+            disableSevereTweetElements()
+            unselectPosNeg()
+            setStatusTextToDefault()
         }
     };
 
@@ -255,3 +276,70 @@ function getNextTweet(){
 }
 var curr_tweet_id, curr_tweet_text;
 /* get next tweet ends */
+
+function disableSevereTweetElements(){
+    // This will disable all the children of the div
+    var nodes = document.getElementById("severe-type").getElementsByTagName('*');
+    for(var i = 0; i < nodes.length; i++){
+        nodes[i].disabled = true;
+        nodes[i].style.color = "#ddd";
+    }
+}
+
+function disablePositiveNegativeElements(){
+    // This will disable all the children of the div
+    var nodes = document.getElementById("pos_or_neg_div").getElementsByTagName('*');
+    for(var i = 0; i < nodes.length; i++){
+        nodes[i].disabled = true;
+        nodes[i].style.color = "#ddd";
+    }
+}
+
+function enablePositiveNegativeElements(){
+    // This will disable all the children of the div
+    var nodes = document.getElementById("pos_or_neg_div").getElementsByTagName('*');
+    for(var i = 0; i < nodes.length; i++){
+        nodes[i].disabled = false;
+        nodes[i].style.color = "";
+    }
+}
+
+function disableButtons(){
+    document.getElementById("skip_tweet").disabled = true;
+    document.getElementById("never_ask_again").disabled = true;
+    document.getElementById("next_tweet_btn").disabled = true;
+}
+
+function enableButtons(){
+    document.getElementById("skip_tweet").disabled = false;
+    document.getElementById("never_ask_again").disabled = false;
+    document.getElementById("next_tweet_btn").disabled = false;
+}
+
+/* next_tweet_btn */
+let next_tweet_btn = document.getElementById("next_tweet_btn")
+next_tweet_btn.addEventListener('click', next_tweet_btn_click)
+
+function next_tweet_btn_click() {
+    getNextTweet()
+}
+
+/* next_tweet_btn ends */
+
+
+function unselectPosNeg(){
+    var ele = document.getElementsByName("pos_or_neg");
+    for(var i = 0; i < ele.length; i++)
+        ele[i].checked = false;
+}
+
+function setStatusTextToDefault(){
+    document.getElementById("pos_or_neg_status").innerHTML = "Status"
+    document.getElementById("severe_status").innerHTML = "Status"
+}
+
+function setSevereToModerate(){
+    document.getElementById('radioTwo').checked = true;
+    var severe = document.querySelector('input[name="severe"]:checked').value
+    console.log(severe)
+}

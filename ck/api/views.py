@@ -205,6 +205,14 @@ def getNextTweet(request):
         q2 = Tweet.objects.exclude(
             id__in=q1.values_list('tweet_id', flat=True))
         q3 = q2.order_by('-common_for_all', 'id')[:1]
+        if not q3.exists():
+            content = [
+                {"id": 0,
+                 "tweet": "Hurray ! You have completed all the tweets. "
+                 "Make sure if you have also completed skipped tweets",
+                 "common_for_all": False}
+            ]
+            return Response(content, status=200)
 
     except ObjectDoesNotExist:
         content = {}
