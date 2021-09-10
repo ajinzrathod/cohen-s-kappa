@@ -13,16 +13,60 @@
             <div class="app-content pt-3 p-md-3 p-lg-4">
                 <div class="container-xl">
 
+
                     {% include 'widgets/searchBar-and-uploadFile.html' %}
+                    
                     {# {% include 'documents/documents-thumbnail-view.html' %} #}
+                    <table class="table">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">User Id</th>
+                          <th scope="col">Tweet</th>
+                          <th scope="col">Response</th>
+                          <th scope="col">Priority</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          
+                          {% for d in data %}
+                        <tr>
+                          <th scope="row">{{d.id}}</th>
+                          <td>{{d.user_id}}</td>
+                          <td>{{d.tweet_id.tweet}} </td>
+                          
+                          {% if d.response == -1 %}
+                              <td>Negative</td>
+                          {% else %}
+                              <td>Positive</td>
+                          {% endif %} 
+
+
+                          {% if d.priority == 0 %}
+                          <td>No Priority</td>
+                          {% elif d.priority == 1 %}
+                          <td>Low</td>
+                          {% elif d.priority == 2 %}
+                          <td>Moderate</td>
+                          {% elif d.priority == 3 %}
+                          <td>High</td>
+                          {% elif d.priority == 4 %}
+                          <td>Extrem</td>
+                          {% endif %}
+
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
                     {% include 'widgets/pagination.html' %}
 
-
+                    
                 </div><!--//container-fluid-->
             </div><!--//app-content-->
 
             {% include 'base/footer.html' %}
-
+            
+            
         </div><!--//app-wrapper-->    					
 
         {% include 'base/js.html' %}
