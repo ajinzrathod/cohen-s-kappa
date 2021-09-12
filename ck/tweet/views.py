@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.conf import settings as django_settings
-from django.utils.translation import activate
 from .models import Response, Tweet
 
 # Create your views here.
@@ -12,9 +11,6 @@ from .models import Response, Tweet
 
 @login_required
 def tweetsHome(request):
-    # data = {
-    #    'active_page': 'tweets',
-    # }
     data = Response.objects.all()
     return render(request,
                   'tweets/index.html',
