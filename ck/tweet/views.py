@@ -15,7 +15,6 @@ def tweetsHome(request):
     # data = {
     #    'active_page': 'tweets',
     # }
-
     data = Response.objects.all()
     return render(request,
                   'tweets/index.html',

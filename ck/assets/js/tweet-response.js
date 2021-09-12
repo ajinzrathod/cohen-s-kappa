@@ -212,10 +212,6 @@ function never_ask_again_click(){
 
 /* get next tweet */
 function getNextTweet(){
-    // show no more tweets when none
-    //
-    // next pr click kare toh see if both answers are yet answered or not
-    // else it should not be enabled
     document.getElementById("tweet_id").innerHTML = "Getting Tweet id"
     document.getElementById("next_tweet").innerHTML = "Getting Next Tweet"
     var xhr = new XMLHttpRequest()
