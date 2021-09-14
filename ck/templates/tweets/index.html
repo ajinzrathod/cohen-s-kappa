@@ -5,7 +5,7 @@
 
     {% include 'base/head.html' %}
 
-    <body class="app">   	
+    <body class="app">
         {% include 'base/header.html' %}
 
         <div class="app-wrapper">
@@ -14,60 +14,72 @@
                 <div class="container-xl">
 
 
-                    {% include 'widgets/searchBar-and-uploadFile.html' %}
-                    
+                    {# {% include 'widgets/searchBar-and-uploadFile.html' %} #}
+                    <div class="app-card app-card-orders-table shadow-sm mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+                                <table class="table app-table-hover mb-0 text-left">
+                                    <thead>
+                                        <tr>
+                                            <th class="cell">Ref Id</th>
+                                            <th class="cell">Response</th>
+                                            <th class="cell">Tweet</th>
+                                            <th class="cell">Priority</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            {% for response in current_page_responses %}
+                                                <tr>
+                                                    <th scope="row">{{ response.id }}</th>
+
+                                                    {% if response.response == -1 %}
+                                                        <td class="cell"><span class="badge bg-secondary">Negative</span></td>
+                                                    {% elif response.response == 1 %}
+                                                        <td class="cell"><span class="badge bg-success">Positive</span></td>
+                                                    {% elif response.response == 0 %}
+                                                        <td class="cell"><span class="badge bg-warning">Skipped</span></td>
+                                                    {% elif response.response == -2 %}
+                                                        <td class="cell"><span class="badge bg-danger">Never</span></td>
+                                                    {% else %}
+                                                        <td class="cell"><a class="btn app-btn-info">-</a></td>
+                                                    {% endif %}
+
+                                                    <!-- <td class="cell"><span class="truncate"> {{ response.tweet_id.tweet }}</span></td> -->
+                                                    
+                                                    <td class="cell"><span> {{ response.tweet_id.tweet }}</span></td>
+
+                                                    <!-- <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td> -->
+
+                                                    {% if response.priority == 1 %}
+                                                        <td class="cell"><span class="badge bg-success">Low</span></td>
+                                                    {% elif response.priority == 2 %}
+                                                        <td class="cell"><span class="badge bg-warning">Moderate</span></td>
+                                                    {% elif response.priority == 3 %}
+                                                        <td class="cell"><span class="badge bg-danger">High</span></td>
+                                                    {% elif response.priority == 4 %}
+                                                        <td class="cell"><span class="badge bg-danger">Extreme</span></td>
+                                                    {% else %}
+                                                        <td class="cell"><a class="btn"> - </a></td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!--//table-responsive-->
+
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
                     {# {% include 'documents/documents-thumbnail-view.html' %} #}
-                    <table class="table">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">User Id</th>
-                          <th scope="col">Tweet</th>
-                          <th scope="col">Response</th>
-                          <th scope="col">Priority</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          
-                          {% for d in data %}
-                        <tr>
-                          <th scope="row">{{d.id}}</th>
-                          <td>{{d.user_id}}</td>
-                          <td>{{d.tweet_id.tweet}} </td>
-                          
-                          {% if d.response == -1 %}
-                              <td>Negative</td>
-                          {% else %}
-                              <td>Positive</td>
-                          {% endif %} 
-
-
-                          {% if d.priority == 0 %}
-                          <td>No Priority</td>
-                          {% elif d.priority == 1 %}
-                          <td>Low</td>
-                          {% elif d.priority == 2 %}
-                          <td>Moderate</td>
-                          {% elif d.priority == 3 %}
-                          <td>High</td>
-                          {% elif d.priority == 4 %}
-                          <td>Extrem</td>
-                          {% endif %}
-
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
                     {% include 'widgets/pagination.html' %}
 
-                    
+
                 </div><!--//container-fluid-->
             </div><!--//app-content-->
 
             {% include 'base/footer.html' %}
-            
-            
-        </div><!--//app-wrapper-->    					
+
+
+        </div><!--//app-wrapper-->
 
         {% include 'base/js.html' %}
 

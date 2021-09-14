@@ -130,6 +130,15 @@
 
 
 /* Buttons */
+.app-btn-danger-lite{
+    background-color: #f42d25 !important;
+    color: white !important;
+}
+.app-btn-danger-lite:hover{
+    background-color: #ea3e37 !important;
+    color: white !important;
+}
+
 .app-btn-danger{
     /* background-color: #d26d69 !important; */
     background-color: #ba2121 !important;
@@ -291,3 +300,7 @@ blockquote {
     display:inline-flex !important; /* Slight bigger line */
 }
 /* Home page ends */
+
+.ck-table{
+    /* background-color: #ffffff; */
+}

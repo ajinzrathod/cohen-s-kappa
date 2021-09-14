@@ -266,6 +266,11 @@ def calculateKappa(request, user1, user2):
     tagger1 = combined_df['response_x']
     tagger2 = combined_df['response_y']
 
+    # user 3 does not have any response or may be no postive and negative only.
+    # all reponse may be never ask.
+    # so throwing this error. handle this
+
+    # Out of range float values are not JSON compliant: nan
     cohen_kappa_score = cohen_kappa_score(tagger1, tagger2)
     print(cohen_kappa_score)
 
@@ -274,4 +279,5 @@ def calculateKappa(request, user1, user2):
         'description': 'success',
         'message': 'success',
     }
+
     return Response(content, status=200)
