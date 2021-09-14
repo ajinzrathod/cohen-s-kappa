@@ -21,6 +21,7 @@ def tweetsHome(request):
         curr_page = 1
     else:
         try:
+            # default is string
             curr_page = int(curr_page)
         except ValueError:
             # django automatically shows page 1 if not integer
@@ -29,6 +30,7 @@ def tweetsHome(request):
 
     current_page_responses = paginator.get_page(curr_page)
 
+    # showing pagination as per current page
     start = 1
     end = current_page_responses.paginator.num_pages
 
@@ -51,6 +53,7 @@ def tweetsHome(request):
         else:
             start = new_start
             end = new_end
+    # // showing pagination as per current page
 
     return render(request,
                   'tweets/index.html',

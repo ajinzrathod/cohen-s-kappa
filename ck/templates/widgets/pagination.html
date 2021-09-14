@@ -5,22 +5,17 @@
 <nav class="app-pagination mt-5">
     {{ current_page_responses }}
     <ul class="pagination justify-content-center">
-        {# Very First Page #}
-        <!-- <li class="page-item"><a class="page-link" href="?page=1">First</a></li> -->
-        <!-- &#38;nbsp; -->
 
         {% if current_page_responses.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ current_page_responses.previous_page_number }}">
                     Prev
-                    <!-- <img src="{% static 'icons8/icons8-left-50.png' %}" class="custom-icons"> -->
                 </a>
             </li>
         {% else %}
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                     Prev
-                    <!-- <img src="{% static 'icons8/icons8-left-50.png' %}" class="custom-icons"> -->
                 </a>
             </li>
         {% endif %}
@@ -37,20 +32,15 @@
             <li class="page-item">
                 <a class="page-link" href="?page={{ current_page_responses.next_page_number }}">
                     Next
-                    <!-- <img src="{% static 'icons8/icons8-right-50.png' %}" class="custom-icons"> -->
                 </a>
             </li>
         {% else %}
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                     Next
-                    <!-- <img src="{% static 'icons8/icons8-right-50.png' %}" class="custom-icons"> -->
                 </a>
             </li>
         {% endif %}
 
-        {# Very Last Page #}
-        <!-- &#38;nbsp; -->
-        <!-- <li class="page-item"><a class="page-link" href="?page={{ current_page_responses.paginator.num_pages }}">Last</a></li> -->
     </ul>
 </nav><!--//app-pagination-->
