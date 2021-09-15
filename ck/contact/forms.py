@@ -10,7 +10,7 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = [ 'issue', 'issue_image']
         help_texts = {
-            'issue': _('Briefly explain what happened or what\'s  not working.'),
+            'issue': _('Briefly explain what happened or what\'s  not working '),
         }
         widgets = {
             'issue': Textarea(attrs={'cols': 80, 'rows': 3}),

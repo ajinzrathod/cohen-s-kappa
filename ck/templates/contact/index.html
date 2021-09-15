@@ -1,59 +1,42 @@
-
-
+{% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>CRM</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% block body_start %}
+    <body class="app">
+    {% endblock %}
 
-	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    {% block content_start %}
+        <div class="app-wrapper">
+            <div class="app-content pt-3 p-md-3 p-lg-4">
+                <div class="container-xl">
+                {% endblock %}
 
-</head>
-<body>
-	
-	
+                {% block content %}
+					
+					<form class="response-form" method="POST" action="" enctype="multipart/form-data">
+						<div class="form-decoration"></div>
+						<div class="form-left-decoration"></div>
+						<div class="form-right-decoration"></div>
+						<div class="circle"></div>
+						<div class="form-inner">
+						{% csrf_token %}
+							{{form.as_p}}						
+						<input class="btn btn-primary btn-sm" type="submit" name="Update Information">
+						</div>
+					</form>
+                
+				{% endblock %}
 
+                {% block content_end %}
+                    </div>
+            </div>
+        </div>
+    {% endblock %}
 
-	<div class="container-fluid">
-	{% block content %}
+    {% block js %}
+    {% endblock %}
 
-	
-
-<div class="row">
-	<div class="col-md-3">
-		<div class="card card-body">
-			<a class="btn btn-warning" > &#8592; Back to Profile</a>
-			<hr>
-			<h3 style="text-align: center">Account Settings</h3>
-			<hr>
-			<img class="profile-pic" src="{{request.contact.id.issue_img.url}}" >
-		
-		</div>
-	</div>
-	<div class="col-md-9">
-		<div class="card card-body">
-			
-			<form method="POST" action="" enctype="multipart/form-data">
-				{% csrf_token %}
-				{{form.as_p}}
-		
-			<input class="btn btn-primary" type="submit" name="Update Information">
-			</form>
-		</div>
-	</div>
-</div>
-
-
-	{% endblock %}
-    </div>
-	<hr>
-	<h5>Our footer</h5>
-	
-</body>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</html>
+    {% block body_end %}
+    </body>
+{% endblock %}
