@@ -5,10 +5,11 @@ from tweet.models import (
     VALID_PRIORITIES)
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.db.models import Q
 # from django.db.models import F
 
 # Rest Framework
-from .serializers import TweetSerializer, ResponseSerializer
+from .serializers import TweetSerializer, ResponseSerializer, UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -235,14 +236,18 @@ def calculateKappa(request, user1, user2):
 
     # check if both user exists
     try:
-        User.objects.get(id=user1)
-        User.objects.get(id=user2)
+        u1 = User.objects.get(username=user1)
+        u2 = User.objects.get(username=user2)
     except ObjectDoesNotExist:
         content = {
-            'description': 'Make sure both user id is correct and both the user exists',
+            'description': 'Make sure both usernames are correct and both the user exists',
             'message': 'failed',
         }
         return Response(content, status=403)
+
+    # converting users from username to id
+    user1 = u1.id
+    user2 = u2.id
 
     import pandas as pd
     from django.db import connection
@@ -261,6 +266,13 @@ def calculateKappa(request, user1, user2):
     df2 = df[df["user_id_id"] == user2]
 
     combined_df = pd.merge(df1, df2, on="tweet_id_id")
+    if combined_df.empty:
+        content = {
+            'description': 'No common responses found',
+            'message': 'success',
+        }
+        return Response(content, status=200)
+
     print(combined_df.head())
 
     tagger1 = combined_df['response_x']
@@ -281,3 +293,17 @@ def calculateKappa(request, user1, user2):
     }
 
     return Response(content, status=200)
+
+
+@api_view(['GET', 'POST'])
+def searchUser(request, searchText):
+    users = User.objects.filter(
+        Q(username__icontains=searchText) |
+        Q(id__icontains=searchText) |
+        Q(first_name__icontains=searchText) |
+        Q(last_name__icontains=searchText) |
+        Q(email__icontains=searchText)
+    )
+
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)

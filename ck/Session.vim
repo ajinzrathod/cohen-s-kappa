@@ -11,7 +11,7 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit templates/widgets/pagination.html
+edit ck/urls.py
 set splitbelow splitright
 wincmd _ | wincmd |
 split
@@ -35,15 +35,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 39 - ((13 * winheight(0) + 8) / 17)
+let s:l = 51 - ((17 * winheight(0) + 9) / 18)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-39
-normal! 025|
+51
+normal! 0
 wincmd w
 argglobal
-if bufexists("tweet/views.py") | buffer tweet/views.py | else | edit tweet/views.py | endif
+if bufexists("api/views.py") | buffer api/views.py | else | edit api/views.py | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -53,19 +53,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 27 - ((14 * winheight(0) + 9) / 18)
+let s:l = 309 - ((18 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-27
-normal! 024|
+309
+normal! 031|
 wincmd w
 wincmd =
 tabnext 1
-badd +25 tweet/views.py
-badd +76 templates/tweets/index.html
-badd +41 templates/widgets/pagination.html
-badd +141 templates/base/header.html
+badd +309 api/views.py
+badd +0 ck/urls.py
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

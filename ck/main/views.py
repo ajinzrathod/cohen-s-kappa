@@ -15,16 +15,16 @@ def home(request):
     return render(request, 'home.html', data)
 
 
-def error_404(request):
-    return render(request, 'error-pages/error-404.html')
+def error_404(request, exception):
+    return render(request, 'error-pages/error-404.html', status=404)
 
 
-def error_403(request):
-    return render(request, 'error-pages/error-403.html')
+def error_403(request, exception):
+    return render(request, 'error-pages/error-403.html', status=403)
 
 
 def error_500(request):
-    return render(request, 'error-pages/error-500.html')
+    return render(request, 'error-pages/error-500.html', status=500)
 
 
 def tos(request):

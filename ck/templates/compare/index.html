@@ -13,18 +13,78 @@
                 {% endblock %}
 
                 {% block content %}
-                    Jai Swaminarayan
-                {% endblock %}
+                    <div class="container">
 
-                {% block content_end %}
-                    </div>
+                        <div class="row height d-flex justify-content-center">
+                            <!-- <div class="row"> -->
+                            <div class="col-md-6">
+                                <div class="search"> <i class="fa fa-search"></i> 
+                                    <input type="text" class="form-control" placeholder="Type id or username or email" id="user1">
+                                </div>
+
+                                {# If you give the `div` a `tabindex` attribute, it will be able to accept focus: #}
+                                {# https://stackoverflow.com/a/6745054/11605100 #}
+                                {# Focus will be given to the `div` when you click on it, and `blur` will trigger when you click on any other element. #}
+                                <div class="app-card app-card-orders-table shadow-sm mb-5">
+                                    <div class="app-card-body">
+                                        <div class="table-responsive table-wrap">
+                                            <table class="table app-table-hover mb-0 text-left" id="table-u1" tabindex="0">
+                                                <tbody id="status_user1">
+                                                </tbody>
+                                            </table>
+                                            <div id="selected_user1_status" class="selected_user text-muted">-No user selected-</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="search"> <i class="fa fa-search"></i> 
+                                    <input type="text" class="form-control" placeholder="Type id or username or email" id="user2"> 
+                                </div>
+
+                                <div class="app-card app-card-orders-table shadow-sm mb-5">
+                                    <div class="app-card-body">
+                                        <div class="table-responsive table-wrap">
+                                            <table class="table app-table-hover mb-0 text-left" id="table-u2">
+                                                <tbody id="status_user2">
+                                                </tbody>
+                                            </table>
+                                            <div id="selected_user2_status" class="selected_user text-muted">-No user selected-</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <center>
+                            <div> <button class="btn app-btn-primary" id="compare-btn">Compare</button> </div>
+                            <div id="compare_status"></div>
+                        </center>
+                    {% endblock %}
+
+                    {% block content_end %}
+                        </div>
+                </div>
             </div>
-        </div>
-    {% endblock %}
+        {% endblock %}
 
-    {% block js %}
-    {% endblock %}
+        {% block js %}
+            {% include 'base/js.html' %}
+            {# tweet-response is js file. So using {{ csrf_token }} in js file will not work. It must be a html file. Thus putting the csrf_token in a global variable that we can then access from our script.  #}
+            <script>
+                // https://stackoverflow.com/a/23350040/11605100
+                var csrftoken = '{{ csrf_token }}';
 
-    {% block body_end %}
-    </body>
-{% endblock %}
+            </script>
+            <script src="{% static 'js/compare-users.js' %}"></script>
+        {% endblock %}
+
+        {% block body_end %}
+        </body>
+    {% endblock %}

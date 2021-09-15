@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from tweet.models import Tweet, Response as ResponseModel
+from django.contrib.auth.models import User
 
 
 class TweetSerializer(serializers.ModelSerializer):
@@ -14,3 +15,9 @@ class ResponseSerializer(serializers.ModelSerializer):
         model = ResponseModel
         fields = '__all__'
         # fields = ['tweet']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
