@@ -238,14 +238,18 @@ def calculateKappa(request, user1, user2):
 
     # check if both user exists
     try:
-        User.objects.get(id=user1)
-        User.objects.get(id=user2)
+        u1 = User.objects.get(username=user1)
+        u2 = User.objects.get(username=user2)
     except ObjectDoesNotExist:
         content = {
-            'description': 'Make sure both user id is correct and both the user exists',
+            'description': 'Make sure both usernames are correct and both the user exists',
             'message': 'failed',
         }
         return Response(content, status=403)
+
+    # converting users from username to id
+    user1 = u1.id
+    user2 = u2.id
 
     import pandas as pd
     from django.db import connection

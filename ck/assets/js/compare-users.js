@@ -130,4 +130,61 @@ function selectUser(curr_row_id, selected_user_status, divIDtoDisplay){
     document.getElementById(selected_user_status).innerHTML = curr_row_id;
     document.getElementById(divIDtoDisplay).style.display = "none"
     console.log("User selected")
+
+    enableCompareButton()
+}
+
+function enableCompareButton() {
+    u1_name = document.getElementById("selected_user1_status").innerHTML
+    u2_name = document.getElementById("selected_user2_status").innerHTML
+
+    if (u1_name !== "-No user selected-" && u2_name !== "-No user selected-"){
+        console.log("Enable Button")
+        document.getElementById("compare-btn").disabled = false;
+    }
+    else{
+        document.getElementById("compare-btn").disabled = true;
+    }
+}
+
+document.getElementById("compare-btn").disabled = true;
+
+let compare_button = document.getElementById("compare-btn")
+compare_button.addEventListener('click', compare_button_click)
+
+function compare_button_click(){
+    document.getElementById("compare_status").innerHTML = "Please Wait.. This can take a while"
+    var username1 = document.getElementById("selected_user1_status").innerHTML
+    var username2 = document.getElementById("selected_user2_status").innerHTML
+
+    console.log(username1)
+    console.log(username2)
+
+    var xhr = new XMLHttpRequest()
+
+    // Function on state change
+    xhr.onreadystatechange = function () {
+        console.log(xhr.readyState)
+        console.log(xhr.responseText)
+
+        // Handling <empty string> in JSON parse, else it will throw error in console
+        if (xhr.responseText == null || xhr.responseText == ""){ }
+        else{
+            var xhrResponseJson = JSON.parse(xhr.responseText)
+            var xhrResponseText = JSON.stringify(xhrResponseJson, null, 4)
+            document.getElementById("compare_status").innerHTML = xhrResponseText
+        }
+
+        // if status: 200
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById("tweet_id").innerHTML = curr_tweet_id
+        }
+    };
+
+    var url = "/api/compare/" + username1 + "/" + username2 + "/" 
+    xhr.open("GET", url, true)
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+    var data = JSON.stringify({});
+    xhr.send(data);
 }
