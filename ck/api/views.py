@@ -6,7 +6,6 @@ from tweet.models import (
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.db.models import Q
-from compare.decorators import admin_required
 # from django.db.models import F
 
 # Rest Framework
@@ -225,7 +224,6 @@ def getNextTweet(request):
 
 
 @api_view(['GET', 'POST'])
-@admin_required
 def calculateKappa(request, user1, user2):
     # check if user has view acces to tweet_response
     if not request.user.has_perm('tweet.view_response'):
@@ -268,6 +266,13 @@ def calculateKappa(request, user1, user2):
     df2 = df[df["user_id_id"] == user2]
 
     combined_df = pd.merge(df1, df2, on="tweet_id_id")
+    if combined_df.empty:
+        content = {
+            'description': 'No common responses found',
+            'message': 'success',
+        }
+        return Response(content, status=200)
+
     print(combined_df.head())
 
     tagger1 = combined_df['response_x']
