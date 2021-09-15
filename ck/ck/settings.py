@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     # Custom
     'tweet.apps.TweetConfig',
+    'contact.apps.ContactConfig',
 
     # Django Rest Framework
     'rest_framework',
@@ -201,3 +202,15 @@ SOCIALACCOUNT_PROVIDERS = {
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
+CONTENT_TYPES = ['image', 'video']
+# 2.5MB - 2621440 Bytes
+# 5MB - 5242880 Bytes
+# 10MB - 10485760 Bytes
+# 20MB - 20971520 Bytes
+# 50MB - 5242880 Bytes
+# 100MB 104857600 Bytes
+# 250MB - 214958080 Bytes
+# 500MB - 429916160 Bytes
+MAX_UPLOAD_SIZE = "5242880"

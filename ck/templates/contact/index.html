@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tz %}
+
+{% block body_start %}
+    <body class="app">
+    {% endblock %}
+
+    {% block content_start %}
+        <div class="app-wrapper">
+            <div class="app-content pt-3 p-md-3 p-lg-4">
+                <div class="container-xl">
+                {% endblock %}
+
+                {% block content %}
+					
+					<form class="response-form" method="POST" action="" enctype="multipart/form-data">
+						<div class="form-decoration"></div>
+						<div class="form-left-decoration"></div>
+						<div class="form-right-decoration"></div>
+						<div class="circle"></div>
+						<div class="form-inner">
+						{% csrf_token %}
+							{{form.as_p}}						
+						<input class="btn app-btn-primary btn-sm" type="submit" name="Update Information">
+						</div>
+					</form>
+                
+				{% endblock %}
+
+                {% block content_end %}
+                    </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block js %}
+    {% endblock %}
+
+    {% block body_end %}
+    </body>
+{% endblock %}
