@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
-from django.http import HttpResponse
+# from django.contrib.auth.models import User
 # Create your views here.
 
 
 def contactHome(request):
-    # data = Response.objects.all()    {'data': data }
-
-    user = request.user
-    form = ContactForm(instance=user)
+    form = ContactForm(instance=request.user)
 
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES)
@@ -25,4 +22,3 @@ def contactHome(request):
 
 def contactFormSuccess(request):
     return render(request, "contact/success.html")
-    
