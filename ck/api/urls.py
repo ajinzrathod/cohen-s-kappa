@@ -15,5 +15,8 @@ urlpatterns = [
          views.getNextTweet, name='Get Next Tweet'),
 
     path('compare/<int:user1>/<int:user2>/',
-         views.calculateKappa, name='Get Next Tweet'),
+         views.calculateKappa, name='Compare using Kappa'),
+
+    path('search-user/<str:searchText>/',
+         views.searchUser, name='Search User'),
 ]

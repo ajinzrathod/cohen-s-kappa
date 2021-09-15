@@ -28,37 +28,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            {% for response in current_page_responses %}
-                                                <tr>
-                                                    <th scope="row">{{ response.id }}</th>
+                                        {% for response in current_page_responses %}
+                                            <tr>
+                                                <th scope="row">{{ response.id }}</th>
 
-                                                    {% if response.response == -1 %}
-                                                        <td class="cell"><span class="badge bg-secondary">Negative</span></td>
-                                                    {% elif response.response == 1 %}
-                                                        <td class="cell"><span class="badge bg-success">Positive</span></td>
-                                                    {% elif response.response == 0 %}
-                                                        <td class="cell"><span class="badge bg-warning">Skipped</span></td>
-                                                    {% elif response.response == -2 %}
-                                                        <td class="cell"><span class="badge bg-danger">Never</span></td>
-                                                    {% else %}
-                                                        <td class="cell"><a class="btn app-btn-info">-</a></td>
-                                                    {% endif %}
+                                                {% if response.response == -1 %}
+                                                    <td class="cell"><span class="badge bg-secondary">Negative</span></td>
+                                                {% elif response.response == 1 %}
+                                                    <td class="cell"><span class="badge bg-success">Positive</span></td>
+                                                {% elif response.response == 0 %}
+                                                    <td class="cell"><span class="badge bg-warning">Skipped</span></td>
+                                                {% elif response.response == -2 %}
+                                                    <td class="cell"><span class="badge bg-danger">Never</span></td>
+                                                {% else %}
+                                                    <td class="cell"><a class="btn app-btn-info">-</a></td>
+                                                {% endif %}
 
-                                                    <td class="cell"><span> {{ response.tweet_id.tweet }}</span></td>
+                                                <td class="cell"><span> {{ response.tweet_id.tweet }}</span></td>
 
-                                                    {% if response.priority == 1 %}
-                                                        <td class="cell"><span class="badge bg-success">Low</span></td>
-                                                    {% elif response.priority == 2 %}
-                                                        <td class="cell"><span class="badge bg-warning">Moderate</span></td>
-                                                    {% elif response.priority == 3 %}
-                                                        <td class="cell"><span class="badge bg-danger">High</span></td>
-                                                    {% elif response.priority == 4 %}
-                                                        <td class="cell"><span class="badge bg-danger">Extreme</span></td>
-                                                    {% else %}
-                                                        <td class="cell"><a class="btn"> - </a></td>
-                                                    {% endif %}
-                                                </tr>
-                                            {% endfor %}
+                                                {% if response.priority == 1 %}
+                                                    <td class="cell"><span class="badge bg-success">Low</span></td>
+                                                {% elif response.priority == 2 %}
+                                                    <td class="cell"><span class="badge bg-warning">Moderate</span></td>
+                                                {% elif response.priority == 3 %}
+                                                    <td class="cell"><span class="badge bg-danger">High</span></td>
+                                                {% elif response.priority == 4 %}
+                                                    <td class="cell"><span class="badge bg-danger">Extreme</span></td>
+                                                {% else %}
+                                                    <td class="cell"><a class="btn"> - </a></td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div><!--//table-responsive-->

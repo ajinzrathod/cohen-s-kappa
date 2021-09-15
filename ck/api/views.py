@@ -5,10 +5,12 @@ from tweet.models import (
     VALID_PRIORITIES)
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.db.models import Q
+from compare.decorators import admin_required
 # from django.db.models import F
 
 # Rest Framework
-from .serializers import TweetSerializer, ResponseSerializer
+from .serializers import TweetSerializer, ResponseSerializer, UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -223,6 +225,7 @@ def getNextTweet(request):
 
 
 @api_view(['GET', 'POST'])
+@admin_required
 def calculateKappa(request, user1, user2):
     # check if user has view acces to tweet_response
     if not request.user.has_perm('tweet.view_response'):
@@ -281,3 +284,17 @@ def calculateKappa(request, user1, user2):
     }
 
     return Response(content, status=200)
+
+
+@api_view(['GET', 'POST'])
+def searchUser(request, searchText):
+    users = User.objects.filter(
+        Q(username__icontains=searchText) |
+        Q(id__icontains=searchText) |
+        Q(first_name__icontains=searchText) |
+        Q(last_name__icontains=searchText) |
+        Q(email__icontains=searchText)
+    )
+
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)

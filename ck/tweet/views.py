@@ -15,8 +15,10 @@ def tweetsHome(request):
 
     # Setup pagination
     RECORDS_PER_PAGE = 25
+
     paginator = Paginator(responses, RECORDS_PER_PAGE)
     curr_page = request.GET.get('page')
+
     if curr_page is None:
         curr_page = 1
     else:
