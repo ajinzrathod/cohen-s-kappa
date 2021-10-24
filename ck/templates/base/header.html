@@ -121,21 +121,21 @@
                                     </a><!--//nav-link-->
                         </li><!--//nav-item-->
 
-                        {% if admin_or_higher %}
-                            <li class="nav-item">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                {% if active_page == "compare" %}
-                                    <a class="nav-link active" href="/compare/">
-                                    {% else %}
-                                        <a class="nav-link" href="/compare/">
-                                        {% endif %}
-                                        <span class="nav-icon">
-                                            <img src="{% static 'icons8/icons8-compare-48.png' %}" class="custom-icons">
-                                        </span>
-                                        <span class="nav-link-text">Compare Users</span>
-                                        </a><!--//nav-link-->
-                            </li><!--//nav-item-->
-                        {% endif %}
+                        <!-- {% if admin_or_higher %} -->
+                        <!--     <li class="nav-item"> -->
+                        <!--         &#60;&#33;&#45;&#45;//Bootstrap Icons: https://icons.getbootstrap.com/ &#45;&#45;&#62; -->
+                        <!--         {% if active_page == "compare" %} -->
+                        <!--             <a class="nav-link active" href="/compare/"> -->
+                        <!--             {% else %} -->
+                        <!--                 <a class="nav-link" href="/compare/"> -->
+                        <!--                 {% endif %} -->
+                        <!--                 <span class="nav-icon"> -->
+                        <!--                     <img src="{% static 'icons8/icons8-compare-48.png' %}" class="custom-icons"> -->
+                        <!--                 </span> -->
+                        <!--                 <span class="nav-link-text">Compare Users</span> -->
+                        <!--                 </a>&#60;&#33;&#45;&#45;//nav-link&#45;&#45;&#62; -->
+                        <!--     </li>&#60;&#33;&#45;&#45;//nav-item&#45;&#45;&#62; -->
+                        <!-- {% endif %} -->
 
                         <li class="nav-item has-submenu">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
