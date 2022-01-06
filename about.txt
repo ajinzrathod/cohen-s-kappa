@@ -1,0 +1,24 @@
+We are working on tweets from the users that are related to Indian Railways and mostly are complaints. The tweet can be grievance or non-grievance that is identified by the annotator. The annotators are classified with the help of Cohen’s kappa score pinpoint precision. Our task is to identify whether the annotators are reliable or not.
+
+A confusion matrix is created based on annotators' reviews. Cohen's Kappa is applied to the matrix and acquire the correct accuracy and evaluate if the tweet is grievance or non-grievance.
+The implementation of the methodology is done using the Django framework which is a Python-based programming language.
+
+First things first, to make any user mark any tweet as negative or positive, there must be some tweets in the Database.
+So the site admin can add and manage tweets that needs to be annotated. 
+
+Now, any user can visit our website and can create an account. To create an account, users must have a Google account from which they can sign up.
+
+Once any user signs up, the user will see a tweet that he/she has to mark as Positive or Negative based on the tweet. If the tweet is marked as Negative, there will be no other option to further classify it. But if the tweet is marked as positive, the user can bifurcate it in one of the following parts
+1. Low
+2. Moderate
+3. High
+4. Low
+
+Once the user clicks on the next tweet, he/she will see the next tweet. And this process will keep on repeating until all the tweets are completed.
+
+Users can see the navigation bar on the left side and it has a section of "Tweet Responses". To see all the responses of tweets, the user has to click here. Here, every user can see each and every detail of their tweet response.
+
+In case if the user has any queries related to our site, they can contact us from the Help section which can also be found in the Navigation bar.
+
+Now, the admin can see all responses in Admin Panel.
+Now the main task is to compare 2 users which can only be done by the Site Admin only. Admin can find the option of comparing users in the Navigation bar. Here admin will select 2 users and will compare them and this will display the inter-rater reliability between those 2 users based on the response that they have given.

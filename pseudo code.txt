@@ -1,0 +1,5 @@
+User Login
+
+Login via Google
+if request.user.is_authenticated:
+	return redirect("/")
